@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SOCIALModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Amistades">
+          <Key>
+            <PropertyRef Name="AmistadId" />
+          </Key>
+          <Property Name="AmistadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioSolicitanteId" Type="int" Nullable="false" />
+          <Property Name="UsuarioAceptadoId" Type="int" Nullable="false" />
+          <Property Name="EstadoAmistad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comentarios">
+          <Key>
+            <PropertyRef Name="ComentarioId" />
+          </Key>
+          <Property Name="ComentarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contenido" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaHoraComentario" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="PublicacionId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EstadoAmistad">
+          <Key>
+            <PropertyRef Name="EstadoAmistadId" />
+          </Key>
+          <Property Name="EstadoAmistadId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Publicaciones">
+          <Key>
+            <PropertyRef Name="PublicacionId" />
+          </Key>
+          <Property Name="PublicacionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Contenido" Type="varchar(max)" Nullable="false" />
+          <Property Name="FechaHoraPublicacion" Type="datetime" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="100" />
+          <Property Name="ApellidoUsuario" Type="varchar" MaxLength="100" />
+          <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="datetime" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="300" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Amistades__Estad__440B1D61">
+          <End Role="EstadoAmistad" Type="Self.EstadoAmistad" Multiplicity="1" />
+          <End Role="Amistades" Type="Self.Amistades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoAmistad">
+              <PropertyRef Name="EstadoAmistadId" />
+            </Principal>
+            <Dependent Role="Amistades">
+              <PropertyRef Name="EstadoAmistad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Amistades__Usuar__4222D4EF">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Amistades" Type="Self.Amistades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Amistades">
+              <PropertyRef Name="UsuarioSolicitanteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Amistades__Usuar__4316F928">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Amistades" Type="Self.Amistades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Amistades">
+              <PropertyRef Name="UsuarioAceptadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comentari__Publi__3D5E1FD2">
+          <End Role="Publicaciones" Type="Self.Publicaciones" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publicaciones">
+              <PropertyRef Name="PublicacionId" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="PublicacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comentari__Usuar__3C69FB99">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Publicaci__Usuar__398D8EEE">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Publicaciones" Type="Self.Publicaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Publicaciones">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SOCIALModelStoreContainer">
+          <EntitySet Name="Amistades" EntityType="Self.Amistades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comentarios" EntityType="Self.Comentarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EstadoAmistad" EntityType="Self.EstadoAmistad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Publicaciones" EntityType="Self.Publicaciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Amistades__Estad__440B1D61" Association="Self.FK__Amistades__Estad__440B1D61">
+            <End Role="EstadoAmistad" EntitySet="EstadoAmistad" />
+            <End Role="Amistades" EntitySet="Amistades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Amistades__Usuar__4222D4EF" Association="Self.FK__Amistades__Usuar__4222D4EF">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Amistades" EntitySet="Amistades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Amistades__Usuar__4316F928" Association="Self.FK__Amistades__Usuar__4316F928">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Amistades" EntitySet="Amistades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comentari__Publi__3D5E1FD2" Association="Self.FK__Comentari__Publi__3D5E1FD2">
+            <End Role="Publicaciones" EntitySet="Publicaciones" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comentari__Usuar__3C69FB99" Association="Self.FK__Comentari__Usuar__3C69FB99">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Publicaci__Usuar__398D8EEE" Association="Self.FK__Publicaci__Usuar__398D8EEE">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Publicaciones" EntitySet="Publicaciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SOCIALModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Amistades">
+          <Key>
+            <PropertyRef Name="AmistadId" />
+          </Key>
+          <Property Name="AmistadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioSolicitanteId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioAceptadoId" Type="Int32" Nullable="false" />
+          <Property Name="EstadoAmistad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EstadoAmistad1" Relationship="Self.FK__Amistades__Estad__440B1D61" FromRole="Amistades" ToRole="EstadoAmistad" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Amistades__Usuar__4222D4EF" FromRole="Amistades" ToRole="Usuarios" />
+          <NavigationProperty Name="Usuarios1" Relationship="Self.FK__Amistades__Usuar__4316F928" FromRole="Amistades" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Comentarios">
+          <Key>
+            <PropertyRef Name="ComentarioId" />
+          </Key>
+          <Property Name="ComentarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaHoraComentario" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="PublicacionId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Publicaciones" Relationship="Self.FK__Comentari__Publi__3D5E1FD2" FromRole="Comentarios" ToRole="Publicaciones" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Comentari__Usuar__3C69FB99" FromRole="Comentarios" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="EstadoAmistad">
+          <Key>
+            <PropertyRef Name="EstadoAmistadId" />
+          </Key>
+          <Property Name="EstadoAmistadId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Amistades" Relationship="Self.FK__Amistades__Estad__440B1D61" FromRole="EstadoAmistad" ToRole="Amistades" />
+        </EntityType>
+        <EntityType Name="Publicaciones">
+          <Key>
+            <PropertyRef Name="PublicacionId" />
+          </Key>
+          <Property Name="PublicacionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaHoraPublicacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Comentarios" Relationship="Self.FK__Comentari__Publi__3D5E1FD2" FromRole="Publicaciones" ToRole="Comentarios" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Publicaci__Usuar__398D8EEE" FromRole="Publicaciones" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="UsuarioId" />
+          </Key>
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ApellidoUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Amistades" Relationship="Self.FK__Amistades__Usuar__4222D4EF" FromRole="Usuarios" ToRole="Amistades" />
+          <NavigationProperty Name="Amistades1" Relationship="Self.FK__Amistades__Usuar__4316F928" FromRole="Usuarios" ToRole="Amistades" />
+          <NavigationProperty Name="Comentarios" Relationship="Self.FK__Comentari__Usuar__3C69FB99" FromRole="Usuarios" ToRole="Comentarios" />
+          <NavigationProperty Name="Publicaciones" Relationship="Self.FK__Publicaci__Usuar__398D8EEE" FromRole="Usuarios" ToRole="Publicaciones" />
+        </EntityType>
+        <Association Name="FK__Amistades__Estad__440B1D61">
+          <End Role="EstadoAmistad" Type="Self.EstadoAmistad" Multiplicity="1" />
+          <End Role="Amistades" Type="Self.Amistades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoAmistad">
+              <PropertyRef Name="EstadoAmistadId" />
+            </Principal>
+            <Dependent Role="Amistades">
+              <PropertyRef Name="EstadoAmistad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Amistades__Usuar__4222D4EF">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Amistades" Type="Self.Amistades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Amistades">
+              <PropertyRef Name="UsuarioSolicitanteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Amistades__Usuar__4316F928">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Amistades" Type="Self.Amistades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Amistades">
+              <PropertyRef Name="UsuarioAceptadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comentari__Publi__3D5E1FD2">
+          <End Role="Publicaciones" Type="Self.Publicaciones" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Publicaciones">
+              <PropertyRef Name="PublicacionId" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="PublicacionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Comentari__Usuar__3C69FB99">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Publicaci__Usuar__398D8EEE">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Publicaciones" Type="Self.Publicaciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Publicaciones">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SOCIALEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Amistades" EntityType="Self.Amistades" />
+          <EntitySet Name="Comentarios" EntityType="Self.Comentarios" />
+          <EntitySet Name="EstadoAmistad" EntityType="Self.EstadoAmistad" />
+          <EntitySet Name="Publicaciones" EntityType="Self.Publicaciones" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <AssociationSet Name="FK__Amistades__Estad__440B1D61" Association="Self.FK__Amistades__Estad__440B1D61">
+            <End Role="EstadoAmistad" EntitySet="EstadoAmistad" />
+            <End Role="Amistades" EntitySet="Amistades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Amistades__Usuar__4222D4EF" Association="Self.FK__Amistades__Usuar__4222D4EF">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Amistades" EntitySet="Amistades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Amistades__Usuar__4316F928" Association="Self.FK__Amistades__Usuar__4316F928">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Amistades" EntitySet="Amistades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comentari__Publi__3D5E1FD2" Association="Self.FK__Comentari__Publi__3D5E1FD2">
+            <End Role="Publicaciones" EntitySet="Publicaciones" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Comentari__Usuar__3C69FB99" Association="Self.FK__Comentari__Usuar__3C69FB99">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Comentarios" EntitySet="Comentarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Publicaci__Usuar__398D8EEE" Association="Self.FK__Publicaci__Usuar__398D8EEE">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Publicaciones" EntitySet="Publicaciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SOCIALModelStoreContainer" CdmEntityContainer="SOCIALEntities">
+          <EntitySetMapping Name="Amistades">
+            <EntityTypeMapping TypeName="SOCIALModel.Amistades">
+              <MappingFragment StoreEntitySet="Amistades">
+                <ScalarProperty Name="AmistadId" ColumnName="AmistadId" />
+                <ScalarProperty Name="UsuarioSolicitanteId" ColumnName="UsuarioSolicitanteId" />
+                <ScalarProperty Name="UsuarioAceptadoId" ColumnName="UsuarioAceptadoId" />
+                <ScalarProperty Name="EstadoAmistad" ColumnName="EstadoAmistad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comentarios">
+            <EntityTypeMapping TypeName="SOCIALModel.Comentarios">
+              <MappingFragment StoreEntitySet="Comentarios">
+                <ScalarProperty Name="ComentarioId" ColumnName="ComentarioId" />
+                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+                <ScalarProperty Name="FechaHoraComentario" ColumnName="FechaHoraComentario" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="PublicacionId" ColumnName="PublicacionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EstadoAmistad">
+            <EntityTypeMapping TypeName="SOCIALModel.EstadoAmistad">
+              <MappingFragment StoreEntitySet="EstadoAmistad">
+                <ScalarProperty Name="EstadoAmistadId" ColumnName="EstadoAmistadId" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Publicaciones">
+            <EntityTypeMapping TypeName="SOCIALModel.Publicaciones">
+              <MappingFragment StoreEntitySet="Publicaciones">
+                <ScalarProperty Name="PublicacionId" ColumnName="PublicacionId" />
+                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+                <ScalarProperty Name="FechaHoraPublicacion" ColumnName="FechaHoraPublicacion" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="SOCIALModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="ApellidoUsuario" ColumnName="ApellidoUsuario" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
