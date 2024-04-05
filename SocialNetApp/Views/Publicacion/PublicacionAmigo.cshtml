@@ -1,0 +1,58 @@
+﻿@model List<SocialNetApp.Models.TableViewModel.PublicacionesEditViewModel>
+
+@{
+    ViewBag.Title = "Publicaciones de Amigos";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/css/Feed.css" rel="stylesheet" />
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+
+
+<div class="container bootdey">
+    <div class="col-md-12 bootstrap snippets">
+        <div class="panel">
+            <div class="panel-body">
+                <textarea class="form-control" rows="2" placeholder="What are you thinking?"></textarea>
+                <div class="mar-top clearfix">
+                    <button class="btn btn-sm btn-primary pull-right" type="submit"><i class="fa fa-pencil fa-fw"></i> Share</button>
+                </div>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                @foreach (var oElemento in Model)
+                {
+
+                <!-- Newsfeed Content -->
+                <!--===================================================-->
+                    <div class="media-block">
+
+                        <div class="media-body">
+                            <div class="mar-btm">
+                                <a href="#" class="btn-link text-semibold media-heading box-inline">@oElemento.UsuarioId</a>
+                                <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> @oElemento.FechaPublicacion</p>
+                            </div>
+                            <p>@oElemento.Contenido</p>
+                            <div class="pad-ver">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>
+                                    <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                                </div>
+                                <a class="btn btn-sm btn-default btn-hover-primary" href="#">Comment</a>
+                            </div>
+                            <hr>
+
+                            <!-- Comments -->
+
+                        </div>
+                    </div>
+                <!--===================================================-->
+                <!-- End Newsfeed Content -->
+                }
+            </div>
+        </div>
+    </div>
+</div>

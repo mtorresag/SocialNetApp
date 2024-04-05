@@ -13,10 +13,10 @@ namespace SocialNetApp.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SOCIALEntities : DbContext
+    public partial class SOCIALEntities1 : DbContext
     {
-        public SOCIALEntities()
-            : base("name=SOCIALEntities")
+        public SOCIALEntities1()
+            : base("name=SOCIALEntities1")
         {
         }
     

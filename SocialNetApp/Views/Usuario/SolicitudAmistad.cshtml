@@ -1,0 +1,80 @@
+﻿@model List<SocialNetApp.Models.TableViewModel.UserTableViewModel>
+
+@{
+    ViewBag.Title = "Notificacines de Amistad";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Fecha_Nacimiento</th>
+            </tr>
+
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    <td>@oElemento.Id</td>
+                    <td>@oElemento.Nombre</td>
+                    <td>@oElemento.Apellido</td>
+                    <td>@oElemento.Correo</td>
+                    <td>@oElemento.Fecha_Nacimiento</td>
+                    <td>
+                        <input onclick="jsRechazar(@oElemento.Id);" type="button" value="Rechazar" class="btn btn-danger" />
+                        <input onclick="jsAceptar(@oElemento.Id);" type="button" value="Aceptar" class="btn btn-default" />
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+
+
+    function jsRechazar(id) {
+        if(confirm("Ests seguro de rechazar la solicitud ?"))
+        {
+            url = "@Url.Content("~/Usuario/RechazarSolicAmistadRecibida")"+"/"+ id;
+
+            $.post(url, function (data)  {
+
+                if(data == "1") {
+                    document.location.href = "@Url.Content("~/Usuario/SolicitudAmistad/")"
+                    alert ("Solicitud de Amistad Rechazada")
+                } else {
+                    alert ("Ocurio un error :(")
+                }
+            }
+            )
+        }
+    }
+
+    function jsAceptar(id) {
+        url = "@Url.Content("~/Usuario/AceptarSolicAmistadRecibida")"+"/"+ id;
+
+        $.post(url, function (data)  {
+
+            if(data == "1") {
+                document.location.href = "@Url.Content("~/Usuario/SolicitudAmistad/")"
+                alert ("Solicitud de Amistad Aceptada")
+            } else {
+                alert ("Ocurio un error :(")
+            }
+        }
+            )
+        
+    }
+
+
+</script>
+

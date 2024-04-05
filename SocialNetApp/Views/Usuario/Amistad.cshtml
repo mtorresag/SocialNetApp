@@ -1,0 +1,41 @@
+﻿@model List<SocialNetApp.Models.TableViewModel.UserTableViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Amistad</h2>
+
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+            </tr>
+
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    <td>@oElemento.Id</td>
+                    <td>@oElemento.Nombre</td>
+                    <td>@oElemento.Apellido</td>
+                    <td>@oElemento.Correo</td>
+                    <td>
+                        <input onclick="document.location.href='@Url.Content("~/Usuario/PerfilAmigo/"+oElemento.Id)'" type="button" value="Ver Perfil" class="btn btn-info" />
+                        <input onclick="document.location.href='@Url.Content("~/Publicacion/PublicacionAmigo/"+oElemento.Id)'" type="button" value="Ver Publicaciones" class="btn btn-info" />
+
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+   
+</script>
+

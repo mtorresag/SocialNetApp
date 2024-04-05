@@ -19,8 +19,9 @@ namespace SocialNetApp.Models
         public System.DateTime FechaHoraComentario { get; set; }
         public int UsuarioId { get; set; }
         public int PublicacionId { get; set; }
+        public int EstadoComentario { get; set; }
     
-        public virtual Publicaciones Publicaciones { get; set; }
         public virtual Usuarios Usuarios { get; set; }
+        public virtual Publicaciones Publicaciones { get; set; }
     }
 }

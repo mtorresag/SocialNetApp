@@ -1,0 +1,60 @@
+﻿@model SocialNetApp.Models.ViewModel.EditUserViewModel
+@{
+        ViewBag.Title = "Mi perfil";
+        ViewBag.Nombre_completo = Model.Nombre + " " + Model.Apellido;
+}
+
+<h2>@ViewBag.Title</h2>
+<h2>@ViewBag.Nombre_completo</h2>
+
+<div class="row">
+    <div class="col-md-12">
+
+        @using (Html.BeginForm("Perfil", "Usuario", FormMethod.Post, new { role = "form", @class = "" }))
+        {
+            @Html.HiddenFor(d => d.Id)
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationMessage("error", new { @class = "text-danger" })
+
+            <br />
+            @Html.LabelFor(d => d.Nombre)
+            @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+
+            <br />
+            @Html.LabelFor(d => d.Apellido)
+            @Html.TextBoxFor(d => d.Apellido, new { @class = "form-control" })
+            @Html.ValidationMessage("Apellido", new { @class = "text-danger" })
+
+            <br />
+            @Html.LabelFor(d => d.Email)
+            @Html.TextBoxFor(d => d.Email, new { @class = "form-control" })
+            @Html.ValidationMessage("Email", new { @class = "text-danger" })
+
+            <br />
+            @Html.LabelFor(d => d.Fecha_Nacimiento)
+            @Html.TextBoxFor(d => d.Fecha_Nacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+            @Html.ValidationMessage("Fecha_Nacimiento", new { @class = "text-danger" })
+
+            <br />
+            @Html.LabelFor(d => d.Password)
+            @Html.PasswordFor(d => d.Password, new { @class = "form-control" })
+            @Html.ValidationMessage("Password", new { @class = "text-danger" })
+
+            <br />
+            @Html.LabelFor(d => d.ConfirmPassword)
+            @Html.PasswordFor(d => d.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessage("ConfirmPassword", new { @class = "text-danger" })
+
+
+            <div style="text-align:right;">
+                <input type="submit" class="btn btn-success" value="Guardar" />
+
+            </div>
+
+
+        }
+
+    </div>
+</div>

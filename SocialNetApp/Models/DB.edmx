@@ -23,6 +23,7 @@
           <Property Name="FechaHoraComentario" Type="datetime" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
           <Property Name="PublicacionId" Type="int" Nullable="false" />
+          <Property Name="EstadoComentario" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="EstadoAmistad">
           <Key>
@@ -39,17 +40,19 @@
           <Property Name="Contenido" Type="varchar(max)" Nullable="false" />
           <Property Name="FechaHoraPublicacion" Type="datetime" Nullable="false" />
           <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="EstadoPublicacion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
             <PropertyRef Name="UsuarioId" />
           </Key>
           <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="NombreUsuario" Type="varchar" MaxLength="100" />
-          <Property Name="ApellidoUsuario" Type="varchar" MaxLength="100" />
+          <Property Name="NombreUsuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ApellidoUsuario" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="CorreoElectronico" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="FechaNacimiento" Type="datetime" Nullable="false" />
-          <Property Name="Password" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="EstadoUsuario" Type="int" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="300" Nullable="false" />
         </EntityType>
         <Association Name="FK__Amistades__Estad__440B1D61">
           <End Role="EstadoAmistad" Type="Self.EstadoAmistad" Multiplicity="1" />
@@ -87,6 +90,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Comentari__Estad__3C69FB99">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Comentari__Publi__3D5E1FD2">
           <End Role="Publicaciones" Type="Self.Publicaciones" Multiplicity="1" />
           <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
@@ -96,18 +111,6 @@
             </Principal>
             <Dependent Role="Comentarios">
               <PropertyRef Name="PublicacionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comentari__Usuar__3C69FB99">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
-          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="Comentarios">
-              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -141,12 +144,12 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Amistades" EntitySet="Amistades" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comentari__Publi__3D5E1FD2" Association="Self.FK__Comentari__Publi__3D5E1FD2">
-            <End Role="Publicaciones" EntitySet="Publicaciones" />
+          <AssociationSet Name="FK__Comentari__Estad__3C69FB99" Association="Self.FK__Comentari__Estad__3C69FB99">
+            <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Comentarios" EntitySet="Comentarios" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comentari__Usuar__3C69FB99" Association="Self.FK__Comentari__Usuar__3C69FB99">
-            <End Role="Usuarios" EntitySet="Usuarios" />
+          <AssociationSet Name="FK__Comentari__Publi__3D5E1FD2" Association="Self.FK__Comentari__Publi__3D5E1FD2">
+            <End Role="Publicaciones" EntitySet="Publicaciones" />
             <End Role="Comentarios" EntitySet="Comentarios" />
           </AssociationSet>
           <AssociationSet Name="FK__Publicaci__Usuar__398D8EEE" Association="Self.FK__Publicaci__Usuar__398D8EEE">
@@ -180,8 +183,9 @@
           <Property Name="FechaHoraComentario" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
           <Property Name="PublicacionId" Type="Int32" Nullable="false" />
+          <Property Name="EstadoComentario" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Comentari__Estad__3C69FB99" FromRole="Comentarios" ToRole="Usuarios" />
           <NavigationProperty Name="Publicaciones" Relationship="Self.FK__Comentari__Publi__3D5E1FD2" FromRole="Comentarios" ToRole="Publicaciones" />
-          <NavigationProperty Name="Usuarios" Relationship="Self.FK__Comentari__Usuar__3C69FB99" FromRole="Comentarios" ToRole="Usuarios" />
         </EntityType>
         <EntityType Name="EstadoAmistad">
           <Key>
@@ -199,6 +203,7 @@
           <Property Name="Contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FechaHoraPublicacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="EstadoPublicacion" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comentarios" Relationship="Self.FK__Comentari__Publi__3D5E1FD2" FromRole="Publicaciones" ToRole="Comentarios" />
           <NavigationProperty Name="Usuarios" Relationship="Self.FK__Publicaci__Usuar__398D8EEE" FromRole="Publicaciones" ToRole="Usuarios" />
         </EntityType>
@@ -207,14 +212,15 @@
             <PropertyRef Name="UsuarioId" />
           </Key>
           <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NombreUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ApellidoUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoUsuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EstadoUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Amistades" Relationship="Self.FK__Amistades__Usuar__4222D4EF" FromRole="Usuarios" ToRole="Amistades" />
           <NavigationProperty Name="Amistades1" Relationship="Self.FK__Amistades__Usuar__4316F928" FromRole="Usuarios" ToRole="Amistades" />
-          <NavigationProperty Name="Comentarios" Relationship="Self.FK__Comentari__Usuar__3C69FB99" FromRole="Usuarios" ToRole="Comentarios" />
+          <NavigationProperty Name="Comentarios" Relationship="Self.FK__Comentari__Estad__3C69FB99" FromRole="Usuarios" ToRole="Comentarios" />
           <NavigationProperty Name="Publicaciones" Relationship="Self.FK__Publicaci__Usuar__398D8EEE" FromRole="Usuarios" ToRole="Publicaciones" />
         </EntityType>
         <Association Name="FK__Amistades__Estad__440B1D61">
@@ -253,6 +259,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Comentari__Estad__3C69FB99">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="Comentarios">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__Comentari__Publi__3D5E1FD2">
           <End Role="Publicaciones" Type="Self.Publicaciones" Multiplicity="1" />
           <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
@@ -262,18 +280,6 @@
             </Principal>
             <Dependent Role="Comentarios">
               <PropertyRef Name="PublicacionId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Comentari__Usuar__3C69FB99">
-          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
-          <End Role="Comentarios" Type="Self.Comentarios" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuarios">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="Comentarios">
-              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -289,7 +295,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="SOCIALEntities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="SOCIALEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Amistades" EntityType="Self.Amistades" />
           <EntitySet Name="Comentarios" EntityType="Self.Comentarios" />
           <EntitySet Name="EstadoAmistad" EntityType="Self.EstadoAmistad" />
@@ -307,12 +313,12 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Amistades" EntitySet="Amistades" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comentari__Publi__3D5E1FD2" Association="Self.FK__Comentari__Publi__3D5E1FD2">
-            <End Role="Publicaciones" EntitySet="Publicaciones" />
+          <AssociationSet Name="FK__Comentari__Estad__3C69FB99" Association="Self.FK__Comentari__Estad__3C69FB99">
+            <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Comentarios" EntitySet="Comentarios" />
           </AssociationSet>
-          <AssociationSet Name="FK__Comentari__Usuar__3C69FB99" Association="Self.FK__Comentari__Usuar__3C69FB99">
-            <End Role="Usuarios" EntitySet="Usuarios" />
+          <AssociationSet Name="FK__Comentari__Publi__3D5E1FD2" Association="Self.FK__Comentari__Publi__3D5E1FD2">
+            <End Role="Publicaciones" EntitySet="Publicaciones" />
             <End Role="Comentarios" EntitySet="Comentarios" />
           </AssociationSet>
           <AssociationSet Name="FK__Publicaci__Usuar__398D8EEE" Association="Self.FK__Publicaci__Usuar__398D8EEE">
@@ -325,7 +331,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SOCIALModelStoreContainer" CdmEntityContainer="SOCIALEntities">
+        <EntityContainerMapping StorageEntityContainer="SOCIALModelStoreContainer" CdmEntityContainer="SOCIALEntities1">
           <EntitySetMapping Name="Amistades">
             <EntityTypeMapping TypeName="SOCIALModel.Amistades">
               <MappingFragment StoreEntitySet="Amistades">
@@ -344,6 +350,7 @@
                 <ScalarProperty Name="FechaHoraComentario" ColumnName="FechaHoraComentario" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="PublicacionId" ColumnName="PublicacionId" />
+                <ScalarProperty Name="EstadoComentario" ColumnName="EstadoComentario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -362,6 +369,7 @@
                 <ScalarProperty Name="Contenido" ColumnName="Contenido" />
                 <ScalarProperty Name="FechaHoraPublicacion" ColumnName="FechaHoraPublicacion" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="EstadoPublicacion" ColumnName="EstadoPublicacion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -373,6 +381,7 @@
                 <ScalarProperty Name="ApellidoUsuario" ColumnName="ApellidoUsuario" />
                 <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="EstadoUsuario" ColumnName="EstadoUsuario" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
               </MappingFragment>
             </EntityTypeMapping>

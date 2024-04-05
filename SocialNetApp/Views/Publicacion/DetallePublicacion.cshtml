@@ -1,0 +1,87 @@
+﻿@model List<SocialNetApp.Models.ViewModel.ComentarioNameViewModel>
+
+@{
+    ViewBag.Title = "Detalle Publicacion";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/css/Feed.css" rel="stylesheet" />
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+
+
+<div class="container bootdey">
+    <div class="col-md-12 bootstrap snippets">
+        <div class="panel">
+            <div class="panel-body">
+
+                <!-- Newsfeed Content -->
+                <!--===================================================-->
+                <div class="media-block">
+
+                    <div class="media-body">
+                        <div class="mar-btm">
+                            <a href="#" class="btn-link text-semibold media-heading box-inline">@ViewData["NombreUsuario"] @ViewData["ApellidoUsuario"]</a>
+                            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> @ViewData["FechaPublicacion"]</p>
+                        </div>
+                        <p>@ViewData["Contenido"]</p>
+                        <div class="pad-ver">
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>
+                                <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                            </div>
+
+                        </div>
+                        <hr>
+
+                        <!-- Comments -->
+                        <!-- Comments -->
+
+                        @foreach (var oElemento in Model)
+                        {
+
+                            <div> 
+                                <div class="media-block pad-all">
+                                    <div class="media-body">
+                                        <div class="mar-btm">
+                                            <a href="#" class="btn-link text-semibold media-heading box-inline">@oElemento.NombreUsuario @oElemento.ApellidoUsuario</a>
+                                            <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> @oElemento.FechaComentario</p>
+                                        </div>
+                                        <p>@oElemento.Contenido</p>
+                                        <div class="pad-ver">
+                                            <div class="btn-group">
+                                                <a class="btn btn-sm btn-default btn-hover-success active" href="#"><i class="fa fa-thumbs-up"></i> You Like it</a>
+                                                <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+
+
+                        <div class="panel-body">
+                            <form id="frmPubli" action="@Url.Action("Add", "Comentario")" method="post">
+                                <textarea name="ContenidoComentario" class="form-control" rows="2" placeholder="Añade un comentario"></textarea>
+                                <input type="hidden" name="IdPublicacion" value="@ViewData["PublicacionId"]" />
+                                <div class="mar-top clearfix">
+                                    <input type="submit" class="btn btn-sm btn-primary btn-success pull-right" value="Nuevo" ) />
+                                </div>
+                            </form>
+                            @*}*@
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <!--===================================================-->
+                <!-- End Newsfeed Content -->
+
+            </div>
+        </div>
+    </div>
+</div>

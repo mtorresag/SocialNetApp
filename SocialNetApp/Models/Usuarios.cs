@@ -28,6 +28,7 @@ namespace SocialNetApp.Models
         public string ApellidoUsuario { get; set; }
         public string CorreoElectronico { get; set; }
         public System.DateTime FechaNacimiento { get; set; }
+        public int EstadoUsuario { get; set; }
         public string Password { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

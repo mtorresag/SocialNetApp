@@ -1,0 +1,102 @@
+﻿@model List<SocialNetApp.Models.ViewModel.PublicacionNamesViewModel>
+
+@{
+    ViewBag.Title = "Mis Publicaciones";
+}
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="~/Content/css/Feed.css" rel="stylesheet" />
+
+<h2>@ViewBag.Title</h2>
+
+<br />
+
+
+<div class="container bootdey">
+    <div class="col-md-12 bootstrap snippets">
+        <div class="panel">
+
+
+            <div class="panel-body">
+                @*@using (Html.BeginForm("Add", "Publicacion", FormMethod.Post, new { role = "form", @class = "" }))
+                {*@
+                <form id="frmPubli" action="@Url.Action("Add", "Publicacion")" method="post">
+                    <textarea name="ContenidoPublicacion" class="form-control" rows="2" placeholder="What are you thinking?"></textarea>
+                    <div class="mar-top clearfix">
+                        <input type="submit" class="btn btn-sm btn-primary btn-success pull-right" value="Nuevo" ) />
+                    </div>
+                </form>
+                    @*}*@
+
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-body">
+                @foreach (var oElemento in Model)
+                {
+
+                <!-- Newsfeed Content -->
+                <!--===================================================-->
+                    <div class="media-block">
+
+                        <div class="media-body">
+                            <div class="mar-btm">
+                                <a href="#" class="btn-link text-semibold media-heading box-inline">@oElemento.NombreUsuario  @oElemento.ApellidoUsuario</a>
+                                <p class="text-muted text-sm"><i class="fa fa-mobile fa-lg"></i> @oElemento.FechaPublicacion</p>
+                            </div>
+                            <p>@oElemento.Contenido</p>
+                            <div class="pad-ver">
+                                <div class="btn-group">
+                                    <a class="btn btn-sm btn-default btn-hover-success" href="#"><i class="fa fa-thumbs-up"></i></a>
+                                    <a class="btn btn-sm btn-default btn-hover-danger" href="#"><i class="fa fa-thumbs-down"></i></a>
+                                </div>
+ 
+                                <input onclick="jsVerPublicacion(@oElemento.PublicacionId, @oElemento.UsuarioId , '@oElemento.Contenido.ToString()', '@oElemento.FechaPublicacion' );" type="button" value="Comment" class="btn btn-sm btn-default btn-hover-primary" />
+
+                            </div>
+                            <hr>
+
+                            <!-- Comments -->
+
+                        </div>
+                    </div>
+                <!--===================================================-->
+                <!-- End Newsfeed Content -->
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function jsVerPublicacion(PublicacionId, UsuarioId,  Contenido , FechaPublicacion) {
+
+        url = "@Url.Content("~/Publicacion/DetallePublicacion")" + "/" + PublicacionId;
+
+        // Eliminar los espacios en blanco al principio y al final de cada cadena
+        PublicacionId = PublicacionId;
+        UsuarioId = UsuarioId;
+        Contenido = Contenido.trim();
+        FechaPublicacion = FechaPublicacion.trim();
+
+        var data = {
+            PublicacionId: PublicacionId,
+            UsuarioId: UsuarioId,
+            Contenido: Contenido,
+            FechaPublicacion: FechaPublicacion
+        };
+
+                $.post(url, data, function (data)  {
+
+                if(data == "1") {
+                    //document.location.href = "@Url.Content("~/Publicacion/DetallePublicacion")" + "/" + PublicacionId
+                    document.location.href = url;
+                } else {
+                    alert ("Ocurio un error :(")
+                }
+            }
+            )
+        }
+</script>
+
+
+

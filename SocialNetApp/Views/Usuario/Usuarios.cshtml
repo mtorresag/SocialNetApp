@@ -1,0 +1,66 @@
+﻿@model List<SocialNetApp.Models.TableViewModel.UserTableViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Usuarios</h2>
+
+<div class="row">
+    <div class="col-md-12">
+        <input type="button" class="btn btn-primary" onclick="document.location.href='@Url.Content("~/Usuario/Add")'" value="Nuevo" ) />
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-bordered">
+            <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Correo</th>
+                <th>Fecha_Nacimiento</th>
+            </tr>
+
+            @foreach (var oElemento in Model)
+            {
+                <tr>
+                    <td>@oElemento.Id</td>
+                    <td>@oElemento.Nombre</td>
+                    <td>@oElemento.Apellido</td>
+                    <td>@oElemento.Correo</td>
+                    <td>@oElemento.Fecha_Nacimiento</td>
+                    <td>
+                        <input id ="btnSolAmistad " onclick="jsEnviarAmistad(@oElemento.Id);" type="button" value="Enviar Solicitud Amistad" class="btn btn-default" />
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+
+    function jsEnviarAmistad(id) {
+            url = "@Url.Content("~/Usuario/AddAmistad")"+"/"+ id;
+
+            $.post(url, function (data)  {
+
+                if(data == "1") {
+                    alert("Ya fue enviada una solicitud aneteriormente :(")
+                    document.location.href = "@Url.Content("~/Usuario/Usuarios/")"
+                }
+                else if (data == "2") {
+                    alert("Solicitud Enviada")
+                    document.location.href = "@Url.Content("~/Usuario/Usuarios/")"
+                }
+                else {
+                    alert ("Ocurio un error :(")
+                }
+            }
+            )
+        }
+
+</script>
+

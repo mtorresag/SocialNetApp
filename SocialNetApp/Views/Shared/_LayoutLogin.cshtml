@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mi aplicación ASP.NET</title>
@@ -21,17 +21,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Inicio", "Index", "Publicacion")</li>
-                    <li>@Html.ActionLink("Mis Publicaciones", "MisPublicaciones", "Publicacion")</li>
-                    <li>@Html.ActionLink("Perfil", "Perfil", "Usuario")</li>
-                    <li>@Html.ActionLink("Mis Amigos", "Amistad", "Usuario")</li>
-                    <li>@Html.ActionLink("Solicitudes Recibidas", "SolicitudAmistad", "Usuario")</li>
-                    <li>@Html.ActionLink("Solicitudes Enviadas ", "AmistadEnviada", "Usuario")</li>
-                    <li>@Html.ActionLink("Usuarios ", "Usuarios", "Usuario")</li>
-                    @*<li>@Html.ActionLink("Usuarios Activos", "Index", "Usuario")</li>*@
-                    @*<li>@Html.ActionLink("Acerca de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contacto", "Contact", "Home")</li>*@
-                    <li>@Html.ActionLink("Cerrar Sesion", "Logoff", "Acceso")</li>
+                    <li>@Html.ActionLink("Nuevo Usuario", "Add", "Acceso")</li>
+                    <li>@Html.ActionLink("Iniciar Sesion", "Login", "Acceso")</li>
+
                 </ul>
             </div>
         </div>

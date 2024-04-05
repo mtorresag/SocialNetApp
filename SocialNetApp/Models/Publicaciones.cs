@@ -24,6 +24,7 @@ namespace SocialNetApp.Models
         public string Contenido { get; set; }
         public System.DateTime FechaHoraPublicacion { get; set; }
         public int UsuarioId { get; set; }
+        public int EstadoPublicacion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comentarios> Comentarios { get; set; }

@@ -1,0 +1,29 @@
+﻿@model SocialNetApp.Models.ViewModel.EditUserViewModel
+@{
+    ViewBag.Title = "Perfil";
+    ViewBag.Nombre_completo = Model.Nombre + " " + Model.Apellido;
+}
+
+<h2>@ViewBag.Title</h2>
+<h2>@ViewBag.Nombre_completo</h2>
+
+<div class="row">
+    <div class="col-md-12">
+            <br />
+            @Html.LabelFor(d => d.Nombre)
+            @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" })
+
+            <br />
+            @Html.LabelFor(d => d.Apellido)
+            @Html.TextBoxFor(d => d.Apellido, new { @class = "form-control" })
+
+            <br />
+            @Html.LabelFor(d => d.Email)
+            @Html.TextBoxFor(d => d.Email, new { @class = "form-control" })
+
+            <br />
+            @Html.LabelFor(d => d.Fecha_Nacimiento)
+            @Html.TextBoxFor(d => d.Fecha_Nacimiento, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date" })
+
+    </div>
+</div>
